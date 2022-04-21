@@ -1,5 +1,6 @@
 import React, { FC, useState, useEffect } from 'react';
 import './App.css';
+import { Board } from './components/board/Board';
 import { CreateList } from './components/createList/CreateList';
 import './firebase/firebase'
 import realtime from './firebase/realtime';
@@ -35,13 +36,7 @@ const App: FC = () => {
   return (
     <div className="App">
       <CreateList setListName={setListName} listName={listName}/>
-      {
-        lists.map(item => (
-          <div>
-            <h1>{item.name.name}</h1>
-          </div>
-        ))
-      }
+      <Board lists={lists}/>
     </div>
   );
 }

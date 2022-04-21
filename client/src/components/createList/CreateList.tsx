@@ -24,7 +24,7 @@ export const CreateList:FC<handleSubmit> = ({ setListName, listName}) => {
       const handleSubmit = async (event: any) => {
         event.preventDefault()
         const newList = new List(listName)
-        git addawait realtime.post('/lists.json', newList)
+        await realtime.post('/lists.json', newList)
       }
 
   return (
