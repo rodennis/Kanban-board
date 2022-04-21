@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getDatabase } from "firebase/database" 
+import { getDatabase } from "firebase/database";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -11,9 +11,9 @@ const firebaseConfig = {
   projectId: "kanban-board-6766f",
   storageBucket: "kanban-board-6766f.appspot.com",
   messagingSenderId: "434429465807",
-  appId: "1:434429465807:web:ecc1060f66b9795b7b13ba"
+  appId: "1:434429465807:web:ecc1060f66b9795b7b13ba",
 };
 
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
-export const db = getDatabase(app)
+export const db = getDatabase(app);
