@@ -1,20 +1,53 @@
-import { FC } from "react";
+import { FC, useState } from "react";
+import realtime from "../../firebase/realtime";
 
-interface Lists {
-  lists: listItems[];
+interface Props {
+  lists: {
+    id: string;
+    name: any;
+    tasks: string[];
+  }[];
+  setToggle: (toggle: boolean) => void;
+  toggle: boolean;
 }
-interface listItems {
-  key: string;
-  name: any;
-}
-// why do i have to define listItems interface in here as well as in app.tsx
 
-export const Board: FC<Lists> = ({ lists }) => {
+export const Board: FC<Props> = ({ lists, setToggle, toggle }) => {
+  const [task, setTask] = useState<string>("");
+
+  const handleTask = async (oldTask: string[], key: string) => {
+    const data = {
+      tasks: [...(oldTask || []), task],
+    };
+    try {
+      await realtime.patch(`/lists/${key}.json`, data);
+      setToggle(!toggle);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
-    <div>
+    <div className="list-container">
       {lists.map((list) => (
-        <div>
-          <h1>{list.name.name}</h1>
+        <div className="list-div" key={list.id}>
+          <h1>{list.name}</h1>
+          <form
+            onSubmit={(event) => {
+              event.preventDefault();
+              handleTask(list.tasks, list.id);
+            }}
+          >
+            <input
+              type="text"
+              onChange={(event) => setTask(event.target.value)}
+            />
+            <button>Add Task</button>
+          </form>
+          {list.tasks?.map((task) => (
+            <div>
+              <h2>{task}</h2>
+            </div>
+          ))}
         </div>
       ))}
     </div>
