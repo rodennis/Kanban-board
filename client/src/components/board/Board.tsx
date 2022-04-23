@@ -1,5 +1,6 @@
 import { FC, useState } from "react";
 import realtime from "../../firebase/realtime";
+import ListItem from '../ListItem/ListItem'
 
 interface Props {
   lists: {
@@ -43,11 +44,7 @@ export const Board: FC<Props> = ({ lists, setToggle, toggle }) => {
             />
             <button>Add Task</button>
           </form>
-          {list.tasks?.map((task) => (
-            <div>
-              <h2>{task}</h2>
-            </div>
-          ))}
+          <ListItem tasks={list.tasks}/>
         </div>
       ))}
     </div>
