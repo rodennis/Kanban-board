@@ -4,6 +4,7 @@ import { Board } from "./components/board/Board";
 import { CreateList } from "./components/createList/CreateList";
 import "./firebase/firebase";
 import realtime from "./firebase/realtime";
+import {DragDropContext} from 'react-beautiful-dnd'
 
 
 const App: FC = () => {
@@ -34,7 +35,9 @@ const App: FC = () => {
   return (
     <div className="App">
       <CreateList setListName={setListName} listName={listName} setToggle={setToggle} toggle={toggle}/>
+      <DragDropContext onDragEnd={e => {console.log(e)}}>
       <Board lists={lists} setToggle={setToggle} toggle={toggle}/>
+      </DragDropContext>
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import { FC, useState } from "react";
+import { Droppable } from "react-beautiful-dnd";
 import realtime from "../../firebase/realtime";
-import ListItem from '../ListItem/ListItem'
+import ListItem from "../ListItem/ListItem";
 
 interface Props {
   lists: {
@@ -32,19 +33,31 @@ export const Board: FC<Props> = ({ lists, setToggle, toggle }) => {
       {lists.map((list) => (
         <div className="list-div" key={list.id}>
           <h1>{list.name}</h1>
-          <form
-            onSubmit={(event) => {
-              event.preventDefault();
-              handleTask(list.tasks, list.id);
+            <form
+              onSubmit={(event) => {
+                event.preventDefault();
+                handleTask(list.tasks, list.id);
+              }}
+            >
+              <input
+                type="text"
+                onChange={(event) => setTask(event.target.value)}
+              />
+              <button>Add Task</button>
+            </form>
+          <Droppable droppableId={list.id}>
+            {(provided) => {
+              return (
+                <div 
+                ref={provided.innerRef}
+                {...provided.droppableProps}
+                className='droppable-col'
+                >
+                  <ListItem tasks={list.tasks} />
+                </div>
+              )
             }}
-          >
-            <input
-              type="text"
-              onChange={(event) => setTask(event.target.value)}
-            />
-            <button>Add Task</button>
-          </form>
-          <ListItem tasks={list.tasks}/>
+          </Droppable>
         </div>
       ))}
     </div>
