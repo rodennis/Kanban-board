@@ -2,6 +2,7 @@ import { FC, useState } from "react";
 import { Droppable } from "react-beautiful-dnd";
 import realtime from "../../firebase/realtime";
 import ListItem from "../ListItem/ListItem";
+import './Board.scss'
 
 interface Props {
   lists: {
