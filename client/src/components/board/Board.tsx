@@ -33,29 +33,30 @@ export const Board: FC<Props> = ({ lists, setToggle, toggle }) => {
       {lists.map((list) => (
         <div className="list-div" key={list.id}>
           <h1>{list.name}</h1>
-            <form
-              onSubmit={(event) => {
-                event.preventDefault();
-                handleTask(list.tasks, list.id);
-              }}
-            >
-              <input
-                type="text"
-                onChange={(event) => setTask(event.target.value)}
-              />
-              <button>Add Task</button>
-            </form>
-          <Droppable droppableId={list.id}>
+          <form
+            onSubmit={(event) => {
+              event.preventDefault();
+              handleTask(list.tasks, list.id);
+            }}
+          >
+            <input
+              type="text"
+              onChange={(event) => setTask(event.target.value)}
+            />
+            <button>Add Task</button>
+          </form>
+          <Droppable droppableId={list.name}>
             {(provided) => {
               return (
-                <div 
-                ref={provided.innerRef}
-                {...provided.droppableProps}
-                className='droppable-col'
+                <div
+                  ref={provided.innerRef}
+                  {...provided.droppableProps}
+                  className="droppable-col"
                 >
                   <ListItem tasks={list.tasks} />
+                  {provided.placeholder}
                 </div>
-              )
+              );
             }}
           </Droppable>
         </div>
