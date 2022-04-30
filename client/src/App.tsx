@@ -49,27 +49,13 @@ const App: FC = () => {
     console.log("src", src, srcIndex);
     console.log(data)
     for (let i = 0; lists.length > i; i++) {
-      if (dest === src) {
-        if (lists[i].name === dest && src) {
-          lists[i].tasks.splice(srcIndex, 1)
-          lists[i].tasks.splice(destIndex, 0, task)
-        }
-      } else {
+        if (lists[i].name === src) lists[i].tasks.splice(srcIndex, 1);
         if (lists[i].name === dest) {
           if (!lists[i].tasks) {
             lists[i]["tasks"] = [];
             lists[i].tasks.splice(destIndex, 0, task);
-          } else {
-            lists[i].tasks.splice(destIndex, 0, task);
-            console.log("hi");
-          }
+          } else lists[i].tasks.splice(destIndex, 0, task);
         }
-      
-      if (lists[i].name === src) {
-        lists[i].tasks.splice(srcIndex, 1);
-        console.log("no");
-      }
-    }
     }
     const newData = {
       lists,

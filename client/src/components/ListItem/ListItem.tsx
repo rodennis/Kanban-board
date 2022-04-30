@@ -13,7 +13,7 @@ const ListItem:FC<Props> = ({tasks}) => {
     <div>
       {tasks?.map((task, index:number) => (
             <div key={index}>
-              <Draggable key={index} index={index} draggableId={task}>
+              <Draggable key={task} index={index} draggableId={task}>
                 {(provided) => {
                   return (
                     <div
