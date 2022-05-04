@@ -16,7 +16,6 @@ interface Props {
 
 export const Board: FC<Props> = ({ lists, setToggle, toggle }) => {
   const [task, setTask] = useState<string>("");
-  const [reset, setReset] = useState<string>("");
 
   const handleNewTask = async (oldTask: string[], key: string) => {
     const data = {
