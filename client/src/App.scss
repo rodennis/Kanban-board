@@ -1,0 +1,17 @@
+@import "./components/variables.scss";
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+.App {
+  text-align: center;
+  background: $greyLight-1;
+  height: 100vh;
+}
+
+.list-container {
+  display: flex;
+  justify-content: space-evenly;
+}

@@ -2,7 +2,7 @@ import { FC, useState } from "react";
 import { Droppable } from "react-beautiful-dnd";
 import realtime from "../../firebase/realtime";
 import ListItem from "../ListItem/ListItem";
-import './Board.scss'
+import "./Board.scss";
 
 interface Props {
   lists: {
@@ -16,35 +16,49 @@ interface Props {
 
 export const Board: FC<Props> = ({ lists, setToggle, toggle }) => {
   const [task, setTask] = useState<string>("");
+  const [reset, setReset] = useState<string>("");
 
-  const handleTask = async (oldTask: string[], key: string) => {
+  const handleNewTask = async (oldTask: string[], key: string) => {
     const data = {
       tasks: [...(oldTask || []), task],
     };
     try {
-      await realtime.patch(`/lists/${key}.json`, data);
-      setToggle(!toggle);
+      if(task !== '') {
+        await realtime.patch(`/lists/${key}.json`, data);
+        setToggle(!toggle);
+      }
     } catch (error) {
       console.error(error);
     }
   };
 
+  // const handleDelete = async (event: any, id: string) => {
+  //   event.preventDefault();
+  //   await realtime.delete(`./lists/${id}.json`);
+  //   setToggle(!toggle);
+  // };
+
   return (
     <div className="list-container">
-      {lists.map((list) => (
+      {lists.map((list,index) => (
         <div className="list-div" key={list.id}>
-          <h1>{list.name}</h1>
+          <h2>{list.name.toUpperCase()}</h2>
           <form
             onSubmit={(event) => {
               event.preventDefault();
-              handleTask(list.tasks, list.id);
+              handleNewTask(list.tasks, list.id);
             }}
           >
             <input
               type="text"
               onChange={(event) => setTask(event.target.value)}
+              placeholder="Add a Task"
+              className="add-task-input"
             />
-            <button>Add Task</button>
+            <button className="add-task">Add Task</button>
+            {/*<button onClick={(event: any) => handleDelete(event, list.id)}>*/}
+            {/*  Delete*/}
+            {/*</button>*/}
           </form>
           <Droppable droppableId={list.name}>
             {(provided) => {

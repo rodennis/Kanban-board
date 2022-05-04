@@ -11,7 +11,7 @@ const ListItem:FC<Props> = ({tasks}) => {
 
   return (
     <div>
-      {tasks?.map((task, index:number) => (
+      {tasks?.map((task:any, index:number) => (
             <div key={index}>
               <Draggable key={task} index={index} draggableId={task}>
                 {(provided) => {
@@ -22,7 +22,7 @@ const ListItem:FC<Props> = ({tasks}) => {
                     {...provided.draggableProps}
                     className='task-div'
                     >
-                    <h2>{task}</h2>
+                    <h4>{task}</h4>
                     </div>
                   )
                 }}

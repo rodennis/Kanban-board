@@ -1,7 +1,11 @@
-$taskOutline: 1px solid red;
+@import '../variables.scss';
 
 .task-div {
-    border: $taskOutline;
+    border: 1px solid transparent;
     cursor: pointer;
-    margin: 10px;
+    margin: 0px 10px 10px 10px;
+    border-radius: 1rem;
+    box-shadow: $inner-shadow;
+    color: $primary;
+
 }

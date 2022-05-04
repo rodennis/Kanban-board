@@ -1,0 +1,29 @@
+@import "../variables";
+
+.list-title {
+  color: $primary;
+  margin: 0;
+  padding: 1.5rem;
+}
+
+.add-list-input {
+  box-shadow: $inner-shadow;
+  height: 2rem;
+  width: 15rem;
+  border-radius: 1rem;
+  background: none;
+  border-style: none;
+  color: $primary;
+  text-align: center;
+}
+
+.add-list-submit {
+  border-radius: 1rem;
+  background: $primary;
+  border-style: none;
+  color: $greyLight-1;
+  width: 5rem;
+  height: 2rem;
+  cursor: pointer;
+  margin-left: 1rem;
+}
