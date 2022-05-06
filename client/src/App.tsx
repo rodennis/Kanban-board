@@ -1,10 +1,16 @@
 import React, { FC, useState, useEffect } from "react";
+import {Routes, Route} from 'react-router-dom'
 import "./App.scss";
 import { Board } from "./components/board/Board";
 import { CreateList } from "./components/createList/CreateList";
 import "./firebase/firebase";
 import realtime from "./firebase/realtime";
 import { DragDropContext } from "react-beautiful-dnd";
+import Dashboard from "./components/DashBoard/Dashboard";
+
+function DashBoard() {
+  return null;
+}
 
 const App: FC = () => {
   type Lists = {
@@ -61,15 +67,18 @@ const App: FC = () => {
 
   return (
     <div className="App">
-      <CreateList
-        setListName={setListName}
-        listName={listName}
-        setToggle={setToggle}
-        toggle={toggle}
-      />
-      <DragDropContext onDragEnd={handleDragEnd}>
-        <Board lists={lists} setToggle={setToggle} toggle={toggle} />
-      </DragDropContext>
+      <Routes>
+        <Route path="/" element={<Dashboard/>}/>
+      </Routes>
+      {/*<CreateList*/}
+      {/*  setListName={setListName}*/}
+      {/*  listName={listName}*/}
+      {/*  setToggle={setToggle}*/}
+      {/*  toggle={toggle}*/}
+      {/*/>*/}
+      {/*<DragDropContext onDragEnd={handleDragEnd}>*/}
+      {/*  <Board lists={lists} setToggle={setToggle} toggle={toggle} />*/}
+      {/*</DragDropContext>*/}
     </div>
   );
 };
