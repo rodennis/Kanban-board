@@ -1,16 +1,11 @@
 import React, { FC, useState, useEffect } from "react";
-import {Routes, Route} from 'react-router-dom'
+import { Routes, Route } from "react-router-dom";
 import "./App.scss";
 import { Board } from "./components/board/Board";
-import { CreateList } from "./components/createList/CreateList";
 import "./firebase/firebase";
 import realtime from "./firebase/realtime";
 import { DragDropContext } from "react-beautiful-dnd";
-import Dashboard from "./components/DashBoard/Dashboard";
-
-function DashBoard() {
-  return null;
-}
+import DashBoard from "./components/DashBoard/Dashboard";
 
 const App: FC = () => {
   type Lists = {
@@ -18,15 +13,21 @@ const App: FC = () => {
     tasks: string[];
     name: string;
   };
-  const [listName, setListName] = useState<string>("");
+
+  type Boards = {
+    name: string;
+    lists: object[];
+    id: string;
+  };
+
   const [lists, setLists] = useState<Lists[]>([]);
+  const [boards, setBoards] = useState<Boards[]>([]);
   const [toggle, setToggle] = useState<boolean>(false);
 
   useEffect(() => {
     const getData = async () => {
-      const res = await realtime.get("/lists.json");
+      const res = await realtime.get("/boards.json");
       const data = res?.data;
-      console.log(data)
       if (data !== null) {
         const returnedLists = Object.entries(data).map(
           ([key, obj]: [string, any]) => {
@@ -34,7 +35,7 @@ const App: FC = () => {
             return obj;
           }
         );
-        setLists(returnedLists);
+        setBoards(returnedLists);
       }
     };
     getData();
@@ -42,7 +43,11 @@ const App: FC = () => {
 
   const handleDragEnd = async (data: any) => {
     if (data.destination === null) return;
-    if (data.destination.index === data.source.index && data.destination.droppableId === data.source.droppableId) return;
+    if (
+      data.destination.index === data.source.index &&
+      data.destination.droppableId === data.source.droppableId
+    )
+      return;
     const dest = data.destination.droppableId;
     const destIndex = data.destination.index;
     const src = data.source.droppableId;
@@ -68,17 +73,16 @@ const App: FC = () => {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<Dashboard/>}/>
+        <Route path="/" element={<DashBoard boards={boards} />} />
+        <Route
+          path="/board/:id"
+          element={
+            <DragDropContext onDragEnd={handleDragEnd}>
+              <Board boards={boards} setToggle={setToggle} toggle={toggle} />
+            </DragDropContext>
+          }
+        />
       </Routes>
-      {/*<CreateList*/}
-      {/*  setListName={setListName}*/}
-      {/*  listName={listName}*/}
-      {/*  setToggle={setToggle}*/}
-      {/*  toggle={toggle}*/}
-      {/*/>*/}
-      {/*<DragDropContext onDragEnd={handleDragEnd}>*/}
-      {/*  <Board lists={lists} setToggle={setToggle} toggle={toggle} />*/}
-      {/*</DragDropContext>*/}
     </div>
   );
 };

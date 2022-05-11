@@ -1,20 +1,21 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import realtime from "../../firebase/realtime";
 import './CreateList.scss'
+import {useParams} from 'react-router-dom'
 
 interface handleSubmit {
-  setListName: (event: any) => void;
-  listName: string;
   setToggle: (toggle: boolean) => void;
   toggle: boolean;
 }
 
-export const CreateList: FC<handleSubmit> = ({
-  setListName,
-  listName,
+const CreateList: FC<handleSubmit> = ({
   setToggle,
   toggle,
 }) => {
+
+  const [listName, setListName] = useState<string>("");
+  const params = useParams()
+
   class List {
     name: string;
     constructor(name: string) {
@@ -25,9 +26,14 @@ export const CreateList: FC<handleSubmit> = ({
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     const newList = new List(listName);
-    await realtime.post("/lists.json", newList);
-    setToggle(!toggle);
+    const data = {
+      lists: [
+        newList
+      ]
+    }
+    await realtime.patch(`/boards/${params.id}.json`, data);
     setListName("");
+    setToggle(!toggle)
   };
 
   return (
@@ -46,3 +52,5 @@ export const CreateList: FC<handleSubmit> = ({
     </div>
   );
 };
+
+export default CreateList

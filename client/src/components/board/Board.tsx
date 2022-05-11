@@ -1,28 +1,41 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { Droppable } from "react-beautiful-dnd";
 import realtime from "../../firebase/realtime";
 import ListItem from "../ListItem/ListItem";
+import CreateList  from "../createList/CreateList";
 import "./Board.scss";
 
 interface Props {
-  lists: {
-    id: string;
-    name: any;
-    tasks: string[];
-  }[];
   setToggle: (toggle: boolean) => void;
   toggle: boolean;
+  boards: {
+    name: string
+    lists: object[]
+    id: string
+  }[]
+}
+type FoundBoard = {
+  name: String
+  lists: object[]
+}
+type List = {
+  name?: string
 }
 
-export const Board: FC<Props> = ({ lists, setToggle, toggle }) => {
+
+export const Board: FC<Props> = ({ boards, setToggle, toggle }) => {
+  const params = useParams();
+
   const [task, setTask] = useState<string>("");
+  const [foundBoard, setFoundBoard] = useState<FoundBoard>();
 
   const handleNewTask = async (oldTask: string[], key: string) => {
     const data = {
       tasks: [...(oldTask || []), task],
     };
     try {
-      if(task !== '') {
+      if (task !== "") {
         await realtime.patch(`/lists/${key}.json`, data);
         setToggle(!toggle);
       }
@@ -31,21 +44,37 @@ export const Board: FC<Props> = ({ lists, setToggle, toggle }) => {
     }
   };
 
-  // const handleDelete = async (event: any, id: string) => {
-  //   event.preventDefault();
-  //   await realtime.delete(`./lists/${id}.json`);
-  //   setToggle(!toggle);
-  // };
+  useEffect(() => {
+    const getBoard = async () => {
+      const res = await realtime.get(`/boards/${params.id}.json`)
+      const data = res.data
+      return data
+    }
+    getBoard().then(result => {
+      setFoundBoard(result)
+    })
+  }, [params.id])
+
+  const handleDelete = async (event: any, id: string) => {
+    event.preventDefault();
+    await realtime.delete(`./lists/${id}.json`);
+    setToggle(!toggle);
+  };
 
   return (
-    <div className="list-container">
-      {lists.map((list,index) => (
-        <div className="list-div" key={list.id}>
-          <h2>{list.name.toUpperCase()}</h2>
+    <div className="board-container">
+      <CreateList
+        setToggle={setToggle}
+        toggle={toggle}
+      />
+      <div className="list-container">
+      {foundBoard && foundBoard.lists.map((board: List, index:number) => (
+        <div className="list-div" key={index}>
+          <h2>{board.name}</h2>
           <form
             onSubmit={(event) => {
               event.preventDefault();
-              handleNewTask(list.tasks, list.id);
+              // handleNewTask(board.tasks?, list.id);
             }}
           >
             <input
@@ -55,11 +84,11 @@ export const Board: FC<Props> = ({ lists, setToggle, toggle }) => {
               className="add-task-input"
             />
             <button className="add-task">Add Task</button>
-            {/*<button onClick={(event: any) => handleDelete(event, list.id)}>*/}
-            {/*  Delete*/}
-            {/*</button>*/}
+            {/* <button onClick={(event: any) => handleDelete(event, board.id)}>
+            Delete
+            </button> */}
           </form>
-          <Droppable droppableId={list.name}>
+          {board.name && <Droppable droppableId={board.name}>
             {(provided) => {
               return (
                 <div
@@ -67,14 +96,15 @@ export const Board: FC<Props> = ({ lists, setToggle, toggle }) => {
                   {...provided.droppableProps}
                   className="droppable-col"
                 >
-                  <ListItem tasks={list.tasks} />
+                  {/* <ListItem tasks={board.tasks} /> */}
                   {provided.placeholder}
                 </div>
               );
             }}
-          </Droppable>
+          </Droppable>}
         </div>
       ))}
+       </div>
     </div>
   );
 };

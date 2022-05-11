@@ -39,3 +39,13 @@
     color: $primary;
 
 }
+
+.board-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.list-container {
+      display: flex;
+      justify-content: space-evenly;
+    }

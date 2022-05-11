@@ -9,9 +9,6 @@ html, body {
   text-align: center;
   background: $greyLight-1;
   height: 100vh;
-}
-
-.list-container {
   display: flex;
-  justify-content: space-evenly;
+  flex-direction: column;
 }
