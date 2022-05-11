@@ -21,6 +21,7 @@ interface FoundBoard {
 }
 type List = {
   name?: string
+  tasks?: any
 }
 
 
@@ -30,13 +31,13 @@ export const Board: FC<Props> = ({ boards, setToggle, toggle }) => {
   const [task, setTask] = useState<string>("");
   const [foundBoard, setFoundBoard] = useState<FoundBoard>();
 
-  const handleNewTask = async (oldTask: string[], key: string) => {
+  const handleNewTask = async (oldTask: string[], key: number) => {
     const data = {
       tasks: [...(oldTask || []), task],
     };
     try {
       if (task !== "") {
-        await realtime.patch(`/lists/${key}.json`, data);
+        await realtime.patch(`/boards/${params.id}/lists/${key}.json`, data);
         setToggle(!toggle);
       }
     } catch (error) {
@@ -75,13 +76,13 @@ export const Board: FC<Props> = ({ boards, setToggle, toggle }) => {
         toggle={toggle}
       />
       <div className="list-container">
-      {foundBoard && foundBoard.lists && foundBoard.lists.map((board: List, index:number) => (
+      {foundBoard && foundBoard.lists && foundBoard.lists.map((list: List, index:number) => (
         <div className="list-div" key={index}>
-          <h2>{board.name}</h2>
+          <h2>{list.name}</h2>
           <form
             onSubmit={(event) => {
               event.preventDefault();
-              // handleNewTask(board.tasks?, list.id);
+              handleNewTask(list.tasks, index);
             }}
           >
             <input
@@ -91,11 +92,11 @@ export const Board: FC<Props> = ({ boards, setToggle, toggle }) => {
               className="add-task-input"
             />
             <button className="add-task">Add Task</button>
-            {/* <button onClick={(event: any) => handleDelete(event, board.id)}>
+            {/* <button onClick={(event: any) => handleDelete(event, list.id)}>
             Delete
             </button> */}
           </form>
-          {board.name && <Droppable droppableId={board.name}>
+          {list.name && <Droppable droppableId={list.name}>
             {(provided) => {
               return (
                 <div
@@ -103,7 +104,7 @@ export const Board: FC<Props> = ({ boards, setToggle, toggle }) => {
                   {...provided.droppableProps}
                   className="droppable-col"
                 >
-                  {/* <ListItem tasks={board.tasks} /> */}
+                  <ListItem tasks={list.tasks} />
                   {provided.placeholder}
                 </div>
               );
