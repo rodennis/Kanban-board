@@ -1,19 +1,32 @@
-import { FC, useState } from "react";
+import { FC, useState, useEffect } from "react";
 import realtime from "../../firebase/realtime";
 import './CreateList.scss'
 import {useParams} from 'react-router-dom'
 
-interface handleSubmit {
+interface Props {
   setToggle: (toggle: boolean) => void;
   toggle: boolean;
+  boards: {
+    name: string
+    lists: object[]
+    id: string
+  }[]
 }
 
-const CreateList: FC<handleSubmit> = ({
+interface FoundBoard {
+  name: string
+  lists: any
+  id: string
+}
+
+const CreateList: FC<Props> = ({
   setToggle,
   toggle,
+  boards
 }) => {
 
   const [listName, setListName] = useState<string>("");
+  const [foundBoard, setFoundBoard]= useState<FoundBoard>()
   const params = useParams()
 
   class List {
@@ -23,13 +36,21 @@ const CreateList: FC<handleSubmit> = ({
     }
   }
 
+  useEffect(() => {
+    if(boards){
+      let res = boards.find(board => {
+        return board.id === params.id
+      })
+      setFoundBoard(res);
+    }
+  }, [boards, params.id])
+  
+
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     const newList = new List(listName);
     const data = {
-      lists: [
-        newList
-      ]
+      lists: [...foundBoard?.lists, newList]
     }
     await realtime.patch(`/boards/${params.id}.json`, data);
     setListName("");

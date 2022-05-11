@@ -15,7 +15,7 @@ interface Props {
     id: string
   }[]
 }
-type FoundBoard = {
+interface FoundBoard {
   name: String
   lists: object[]
 }
@@ -45,30 +45,37 @@ export const Board: FC<Props> = ({ boards, setToggle, toggle }) => {
   };
 
   useEffect(() => {
-    const getBoard = async () => {
-      const res = await realtime.get(`/boards/${params.id}.json`)
-      const data = res.data
-      return data
+    // const getBoard = async () => {
+    //   const res = await realtime.get(`/boards/${params.id}.json`)
+    //   const data = res.data
+    //   return data
+    // }
+    // getBoard().then(result => {
+    //   setFoundBoard(result)
+    // })
+    if(boards){
+      let res = boards.find(board => {
+        return board.id === params.id
+      })
+      setFoundBoard(res);
     }
-    getBoard().then(result => {
-      setFoundBoard(result)
-    })
-  }, [params.id])
+  }, [boards, params.id])
 
-  const handleDelete = async (event: any, id: string) => {
-    event.preventDefault();
-    await realtime.delete(`./lists/${id}.json`);
-    setToggle(!toggle);
-  };
+  // const handleDelete = async (event: any, id: string) => {
+  //   event.preventDefault();
+  //   await realtime.delete(`./lists/${id}.json`);
+  //   setToggle(!toggle);
+  // };
 
   return (
     <div className="board-container">
       <CreateList
+        boards={boards}
         setToggle={setToggle}
         toggle={toggle}
       />
       <div className="list-container">
-      {foundBoard && foundBoard.lists.map((board: List, index:number) => (
+      {foundBoard && foundBoard.lists && foundBoard.lists.map((board: List, index:number) => (
         <div className="list-div" key={index}>
           <h2>{board.name}</h2>
           <form
