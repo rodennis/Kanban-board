@@ -16,7 +16,7 @@ const DashBoard:FC<Props> = ({boards}) => {
 
 const createNewBoard = async (event:any) => {
     event.preventDefault()
-    try {
+    try { 
         const data = {
             name: board
         }
@@ -38,9 +38,9 @@ const handleBoardName = (event:any) => {
             </form>
 
             {
-                boards.map(board => {
+                boards.map((board) => {
                     return (
-                        <div>
+                        <div key={board.id}>
                             <Link to={`/board/${board.id}`}>{board.name}</Link>
                         </div>
                     )

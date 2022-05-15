@@ -1,51 +1,52 @@
-@import "../variables.scss";
-
-.droppable-col {
-    min-height: 5.3rem;
-    box-shadow:.8rem .8rem 1.4rem $greyLight-2,
-    -.2rem -.2rem 1.8rem $white;
-    border-radius: 1rem;
-    padding: 10px;
-    margin-top: 2rem;
-}
-
-.add-task {
-    border-radius: 1rem;
-    background: $primary;
-    border-style: none;
-    color: $greyLight-1;
-    width: 5rem;
-    height: 2rem;
-    cursor: pointer;
-    margin-left: 1rem;
-}
-
-.add-task-input {
-    box-shadow: $inner-shadow;
-    height: 2rem;
-    width: 15rem;
-    border-radius: 1rem;
-    background: none;
-    border-style: none;
-    color: $primary;
-    text-align: center;
-}
-
-::placeholder {
-    color: $primary;
-}
-
-.list-div h2 {
-    color: $primary;
-
-}
+@import "../_variables.scss";
 
 .board-container {
     display: flex;
     flex-direction: column;
-}
+    
+    .list-container {
+        display: flex;
+        justify-content: space-evenly;
+        
+        ::placeholder {
+            color: $primary;
+        }
 
-.list-container {
-      display: flex;
-      justify-content: space-evenly;
+        .droppable-col {
+          min-height: 5.3rem;
+          box-shadow: 0.8rem 0.8rem 1.4rem $greyLight-2, -0.2rem -0.2rem 1.8rem $white;
+          border-radius: 1rem;
+          padding: 10px;
+          margin-top: 2rem;
+        }
+        
+        .add-task {
+          border-radius: 1rem;
+          background: $primary;
+          border-style: none;
+          color: $greyLight-1;
+          width: 5rem;
+          height: 2rem;
+          cursor: pointer;
+          margin-left: 1rem;
+        }
+        
+        .add-task-input {
+          box-shadow: $inner-shadow;
+          height: 2rem;
+          width: 15rem;
+          border-radius: 1rem;
+          background: none;
+          border-style: none;
+          color: $primary;
+          text-align: center;
+        }
+    
+    .list-div {
+      
+        h2 {
+        color: $primary;
+      }
     }
+  }
+}

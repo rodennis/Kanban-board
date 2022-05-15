@@ -49,10 +49,17 @@ const CreateList: FC<Props> = ({
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     const newList = new List(listName);
-    const data = {
-      lists: [...foundBoard?.lists, newList]
+    if(foundBoard?.lists){
+      const data = {
+        lists: [...foundBoard?.lists, newList]
+      }
+      await realtime.patch(`/boards/${params.id}.json`, data);
+    }else {
+      const data = {
+        lists: [newList]
+      }
+      await realtime.patch(`/boards/${params.id}.json`, data);
     }
-    await realtime.patch(`/boards/${params.id}.json`, data);
     setListName("");
     setToggle(!toggle)
   };
