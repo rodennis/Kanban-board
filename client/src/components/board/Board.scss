@@ -30,6 +30,17 @@
           cursor: pointer;
           margin-left: 1rem;
         }
+
+        .delete-task {
+          border-radius: 1rem;
+          background: $primary;
+          border-style: none;
+          color: $greyLight-1;
+          width: 5rem;
+          height: 2rem;
+          cursor: pointer;
+          margin-left: 1rem;
+        }
         
         .add-task-input {
           box-shadow: $inner-shadow;

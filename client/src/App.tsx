@@ -1,6 +1,6 @@
 import React, { FC, useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
-import "./App.scss";
+import "./main.scss";
 import { Board } from "./components/board/Board";
 import "./firebase/firebase";
 import realtime from "./firebase/realtime";

@@ -1,0 +1,26 @@
+@import '../components/variables';
+.dashboard-container {
+  .boards-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .board-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    min-height: 5.3rem;
+    border-radius: 1rem;
+    padding: 10px;
+    margin-top: 2rem;
+    margin-right: 2rem;
+    box-shadow: 0.8rem 0.8rem 1.4rem $greyLight-2, -0.2rem -0.2rem 1.8rem $white;
+  
+    h2 {
+      color: $primary;
+    }
+  }
+}

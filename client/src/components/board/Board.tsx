@@ -61,11 +61,16 @@ export const Board: FC<Props> = ({ boards, setToggle, toggle }) => {
     }
   }, [boards, params.id]);
 
-  // const handleDelete = async (event: any, id: string) => {
-  //   event.preventDefault();
-  //   await realtime.delete(`./lists/${id}.json`);
-  //   setToggle(!toggle);
-  // };
+  const handleDelete = async (event: any, id: number) => {
+    event.preventDefault();
+    foundBoard?.lists.splice(id, 1);
+    const newData = {
+      name: foundBoard?.name,
+      lists: foundBoard?.lists,
+    };
+    await realtime.put(`/boards/${params.id}.json`, newData);
+    setToggle(!toggle);
+  };
 
   const handleDragEnd = async (data: any) => {
     if (data.destination === null) return;
@@ -88,7 +93,9 @@ export const Board: FC<Props> = ({ boards, setToggle, toggle }) => {
         board.name === dest && board.tasks.splice(destIndex, 0, task);
       }
     }
+
     const newData = {
+      name: foundBoard?.name,
       lists: foundBoard?.lists,
     };
     await realtime.put(`/boards/${params.id}.json`, newData);
@@ -118,9 +125,9 @@ export const Board: FC<Props> = ({ boards, setToggle, toggle }) => {
                     className="add-task-input"
                   />
                   <button className="add-task">Add Task</button>
-                  {/* <button onClick={(event: any) => handleDelete(event, list.id)}>
-            Delete
-            </button> */}
+                  <button className='delete-task' onClick={(event: any) => handleDelete(event, index)}>
+                    Delete
+                  </button>
                 </form>
                 {list.name && (
                   <Droppable droppableId={list.name}>
