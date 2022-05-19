@@ -9,18 +9,22 @@ interface Props {
     id: string;
     lists: object[];
   }[];
+  setToggle: (toggle: boolean) => void;
+  toggle: boolean
 }
 
-const DashBoard: FC<Props> = ({ boards }) => {
+const DashBoard: FC<Props> = ({ boards, setToggle, toggle }) => {
   const [board, setBoard] = useState<string>("");
 
   const createNewBoard = async (event: any) => {
     event.preventDefault();
     try {
+      console.log('hello')
       const data = {
         name: board,
       };
       await realtime.post("/boards.json", data);
+      setToggle(!toggle)
     } catch (error) {
       console.log("board not created " + error);
     }
@@ -32,7 +36,7 @@ const DashBoard: FC<Props> = ({ boards }) => {
 
   return (
     <div className="dashboard-container">
-      <form onSubmit={createNewBoard}>
+      <form onSubmit={e => createNewBoard(e)}>
         <input
           type="text"
           placeholder={"add a board"}

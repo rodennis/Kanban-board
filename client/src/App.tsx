@@ -37,7 +37,7 @@ const App: FC = () => {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<DashBoard boards={boards} />} />
+        <Route path="/" element={<DashBoard boards={boards} setToggle={setToggle} toggle={toggle}/>} />
         <Route path="/board/:id" element={<Board boards={boards} setToggle={setToggle} toggle={toggle} />}/>
       </Routes>
     </div>
