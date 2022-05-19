@@ -4,7 +4,7 @@ import { Droppable, DragDropContext } from "react-beautiful-dnd";
 import realtime from "../../firebase/realtime";
 import ListItem from "../ListItem/ListItem";
 import CreateList from "../createList/CreateList";
-import "./Board.scss";
+import "../../main.scss";
 
 interface Props {
   setToggle: (toggle: boolean) => void;

@@ -1,7 +1,8 @@
 import React, { FC, useState } from "react";
 import { Link } from "react-router-dom";
 import realtime from "../../firebase/realtime";
-import "../../App.scss";
+import "../../main.scss";
+
 interface Props {
   boards: {
     name: string;

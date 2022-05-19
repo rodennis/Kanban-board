@@ -1,6 +1,6 @@
 import React, {FC} from 'react'
 import { Draggable } from 'react-beautiful-dnd'
-import './listItem.scss'
+import "../../main.scss";
 
 interface Props {
   tasks: string[]

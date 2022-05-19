@@ -1,7 +1,7 @@
 import { FC, useState, useEffect } from "react";
 import realtime from "../../firebase/realtime";
-import './CreateList.scss'
 import {useParams} from 'react-router-dom'
+import "../../main.scss";
 
 interface Props {
   setToggle: (toggle: boolean) => void;

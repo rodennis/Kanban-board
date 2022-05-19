@@ -1,18 +1,7 @@
-html, body {
-  margin: 0;
-  padding: 0;
-}
+@import './sass/base';
+@import './sass/board';
+@import './sass/createList';
+@import './sass/dashboard';
+@import './sass/listItem';
 
-.App {
-  text-align: center;
-  background: #E4EBF5;
-  height: 100vh;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-}
-/*# sourceMappingURL=App.css.map */
+
