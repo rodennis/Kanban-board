@@ -1,33 +1,28 @@
 import { FC, useState, useEffect } from "react";
 import realtime from "../../firebase/realtime";
-import {useParams} from 'react-router-dom'
+import { useParams } from "react-router-dom";
 import "../../main.scss";
 
 interface Props {
   setToggle: (toggle: boolean) => void;
   toggle: boolean;
   boards: {
-    name: string
-    lists: object[]
-    id: string
-  }[]
+    name: string;
+    lists: object[];
+    id: string;
+  }[];
 }
 
 interface FoundBoard {
-  name: string
-  lists: any
-  id: string
+  name: string;
+  lists: any;
+  id: string;
 }
 
-const CreateList: FC<Props> = ({
-  setToggle,
-  toggle,
-  boards
-}) => {
-
+const CreateList: FC<Props> = ({ setToggle, toggle, boards }) => {
   const [listName, setListName] = useState<string>("");
-  const [foundBoard, setFoundBoard]= useState<FoundBoard>()
-  const params = useParams()
+  const [foundBoard, setFoundBoard] = useState<FoundBoard>();
+  const params = useParams();
 
   class List {
     name: string;
@@ -37,31 +32,30 @@ const CreateList: FC<Props> = ({
   }
 
   useEffect(() => {
-    if(boards){
-      let res = boards.find(board => {
-        return board.id === params.id
-      })
+    if (boards) {
+      let res = boards.find((board) => {
+        return board.id === params.id;
+      });
       setFoundBoard(res);
     }
-  }, [boards, params.id])
-  
+  }, [boards, params.id]);
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     const newList = new List(listName);
-    if(foundBoard?.lists){
+    if (foundBoard?.lists) {
       const data = {
-        lists: [...foundBoard?.lists, newList]
-      }
+        lists: [...foundBoard?.lists, newList],
+      };
       await realtime.patch(`/boards/${params.id}.json`, data);
-    }else {
+    } else {
       const data = {
-        lists: [newList]
-      }
+        lists: [newList],
+      };
       await realtime.patch(`/boards/${params.id}.json`, data);
     }
     setListName("");
-    setToggle(!toggle)
+    setToggle(!toggle);
   };
 
   return (
@@ -81,4 +75,4 @@ const CreateList: FC<Props> = ({
   );
 };
 
-export default CreateList
+export default CreateList;
