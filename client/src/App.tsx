@@ -4,7 +4,8 @@ import "./main.scss";
 import { Board } from "./components/board/Board";
 import "./firebase/firebase";
 import realtime from "./firebase/realtime";
-import DashBoard from "./components/DashBoard/Dashboard";
+import DashBoard from "./components/dashBoard/Dashboard";
+import HomePage from './components/homePage/HomePage'
 
 type Boards = {
   name: string;
@@ -37,7 +38,8 @@ const App: FC = () => {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<DashBoard boards={boards} setToggle={setToggle} toggle={toggle}/>} />
+        <Route path="/" element={<HomePage />}/>
+        <Route path="/boards" element={<DashBoard boards={boards} setToggle={setToggle} toggle={toggle}/>} />
         <Route path="/board/:id" element={<Board boards={boards} setToggle={setToggle} toggle={toggle} />}/>
       </Routes>
     </div>

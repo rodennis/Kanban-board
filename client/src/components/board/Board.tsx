@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Droppable, DragDropContext } from "react-beautiful-dnd";
 import realtime from "../../firebase/realtime";
-import ListItem from "../ListItem/ListItem";
+import ListItem from "../listItem/ListItem";
 import CreateList from "../createList/CreateList";
 import "../../main.scss";
 

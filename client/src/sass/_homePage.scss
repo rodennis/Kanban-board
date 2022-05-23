@@ -1,0 +1,53 @@
+.homescreenTopDiv {
+  height: 10%;
+  display: flex;
+
+  h1 {
+      font-family: 'oswald';
+      margin-left: 2rem;
+      font-size: 2.25rem;
+  }
+
+  button {
+    position: absolute;
+    right: 2rem;
+    top: 1.25rem;
+    border-radius: 20rem;
+    background: $primary;
+    border-style: none;
+    color: $greyLight-1;
+    cursor: pointer;
+    padding: 1rem;
+    font-family: 'oswald';
+  }
+}
+
+.homescreenBottomDiv {
+  height: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .helperText {
+      width: 35rem;
+      text-align: left;
+      margin-right: 2rem;
+      
+      h2 {
+        font-family: 'oswald';
+        font-size: 2.8rem;
+      }
+
+      p {   
+        font-size: 1.25rem;
+      }
+  }
+
+  .helperImage {
+    img {
+        display: absolute;
+        height: 30rem;
+        border-radius: 20rem;
+    }
+  }
+}
